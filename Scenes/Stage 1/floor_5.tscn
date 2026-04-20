@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://myogvkh36jqi"]
 
 [ext_resource type="Texture2D" uid="uid://he2dnns0vjll" path="res://Assets/Stage 1/floor5.png" id="1_j552w"]
+[ext_resource type="Script" uid="uid://de0hdgdy2jlgs" path="res://Scripts/floor_5.gd" id="2_8ui4o"]
 [ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="2_itkwi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
@@ -17,28 +18,36 @@ size = Vector2(506, 20)
 
 [node name="Floor1" type="Node2D" unique_id=1215284571]
 
-[node name="Floor1" type="Sprite2D" parent="." unique_id=178336973]
+[node name="Floor5" type="Sprite2D" parent="." unique_id=178336973]
 texture_filter = 1
 position = Vector2(0, -16)
 texture = ExtResource("1_j552w")
+script = ExtResource("2_8ui4o")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Floor1" unique_id=404856588]
+[node name="StaticBody2D" type="StaticBody2D" parent="Floor5" unique_id=404856588]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/StaticBody2D" unique_id=1027392099]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor5/StaticBody2D" unique_id=1027392099]
 position = Vector2(0, 84)
 shape = SubResource("RectangleShape2D_faqa8")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Floor1/StaticBody2D" unique_id=1068221834]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Floor5/StaticBody2D" unique_id=1068221834]
 position = Vector2(-248, 16)
 shape = SubResource("RectangleShape2D_3ropc")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Floor1/StaticBody2D" unique_id=1223041319]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Floor5/StaticBody2D" unique_id=1223041319]
 position = Vector2(248, 16)
 shape = SubResource("RectangleShape2D_vur88")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Floor1/StaticBody2D" unique_id=792076843]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Floor5/StaticBody2D" unique_id=792076843]
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_ljw3i")
 
+[node name="Timer" type="Timer" parent="Floor5" unique_id=1272796985]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
 [node name="Player" parent="." unique_id=345853380 instance=ExtResource("2_itkwi")]
 position = Vector2(-192, 7)
+
+[connection signal="timeout" from="Floor5/Timer" to="Floor5" method="_on_timer_timeout"]

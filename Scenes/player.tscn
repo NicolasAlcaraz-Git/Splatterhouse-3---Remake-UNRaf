@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://6ygluqrr0wxe"]
 
-[ext_resource type="Script" uid="uid://bk70krqygdyfc" path="res://Scenes/movement.gd" id="1_cvnsp"]
+[ext_resource type="Script" uid="uid://bk70krqygdyfc" path="res://Scripts/movement.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://dyscnu2582ywc" path="res://Assets/Player/sprite.png" id="2_6t5aa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vgqql"]
@@ -124,6 +124,6 @@ position = Vector2(-15, 11.5)
 shape = SubResource("RectangleShape2D_h4iuc")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=291132452]
-zoom = Vector2(4.5, 4.5)
+zoom = Vector2(4, 4)
 
 [connection signal="animation_finished" from="CharacterBody2D/AnimatedSprite2D" to="CharacterBody2D" method="_on_animated_sprite_2d_animation_finished"]
