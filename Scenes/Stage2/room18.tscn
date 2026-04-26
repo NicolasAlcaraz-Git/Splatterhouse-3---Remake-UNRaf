@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://c4iqqf4xa32bm"]
+
+[ext_resource type="Texture2D" uid="uid://cqm8kquy4ljh" path="res://Assets/Stage2/floor18.png" id="1_kt3wf"]
+[ext_resource type="Script" uid="uid://bqukypp4nepvc" path="res://Scripts/floor_18.gd" id="2_j5uhv"]
+[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="2_shl1l"]
+[ext_resource type="Script" uid="uid://ctkt4nceictyl" path="res://Scripts/portal18.gd" id="4_04d27"]
+[ext_resource type="Script" uid="uid://d4gmkis6nmx7u" path="res://Scripts/portal18_2.gd" id="5_pdycw"]
+[ext_resource type="Script" uid="uid://cnyd03l0x41ks" path="res://Scripts/portal18_3.gd" id="6_etjuw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
+size = Vector2(512, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ropc"]
+size = Vector2(20, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vur88"]
+size = Vector2(20, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljw3i"]
+size = Vector2(506, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pdycw"]
+size = Vector2(13, 92)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_etjuw"]
+size = Vector2(16, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onr1y"]
+size = Vector2(13, 94)
+
+[node name="Floor1" type="Node2D" unique_id=1215284571]
+
+[node name="Room18" type="Sprite2D" parent="." unique_id=178336973]
+texture_filter = 1
+position = Vector2(0, -16)
+texture = ExtResource("1_kt3wf")
+script = ExtResource("2_j5uhv")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Room18" unique_id=404856588]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room18/StaticBody2D" unique_id=1027392099]
+position = Vector2(0, 84)
+shape = SubResource("RectangleShape2D_faqa8")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Room18/StaticBody2D" unique_id=1068221834]
+position = Vector2(-246, 16)
+shape = SubResource("RectangleShape2D_3ropc")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Room18/StaticBody2D" unique_id=1223041319]
+position = Vector2(246, 16)
+shape = SubResource("RectangleShape2D_vur88")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Room18/StaticBody2D" unique_id=792076843]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_ljw3i")
+
+[node name="Timer" type="Timer" parent="Room18" unique_id=1847642210]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Player" parent="." unique_id=345853380 instance=ExtResource("2_shl1l")]
+position = Vector2(-59, 6)
+
+[node name="Portal18" type="Area2D" parent="." unique_id=1910339068]
+script = ExtResource("4_04d27")
+next_scene_path = "res://Scenes/Stage2/room17.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal18" unique_id=1533896227]
+position = Vector2(-241.5, -8)
+shape = SubResource("RectangleShape2D_pdycw")
+debug_color = Color(0, 1, 0, 0.41960785)
+
+[node name="Portal18_2" type="Area2D" parent="." unique_id=558962131]
+script = ExtResource("5_pdycw")
+next_scene_path = "res://Scenes/Stage2/room13.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal18_2" unique_id=1976174830]
+position = Vector2(-128, 59.5)
+shape = SubResource("RectangleShape2D_etjuw")
+debug_color = Color(0, 1, 0, 0.41960785)
+
+[node name="Portal18_3" type="Area2D" parent="." unique_id=741974072]
+script = ExtResource("6_etjuw")
+next_scene_path = "res://Scenes/Stage2/room19.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal18_3" unique_id=99813439]
+position = Vector2(241, -8)
+shape = SubResource("RectangleShape2D_onr1y")
+debug_color = Color(0, 1, 0, 0.41960785)
+
+[connection signal="timeout" from="Room18/Timer" to="Room18" method="_on_timer_timeout"]
+[connection signal="body_entered" from="Portal18" to="Portal18" method="_on_body_entered"]
+[connection signal="body_entered" from="Portal18_2" to="Portal18_2" method="_on_body_entered"]
+[connection signal="body_entered" from="Portal18_3" to="Portal18_3" method="_on_body_entered"]

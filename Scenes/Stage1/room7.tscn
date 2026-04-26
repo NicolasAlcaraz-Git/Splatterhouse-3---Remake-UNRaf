@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://deenjm8un1i6c"]
+
+[ext_resource type="Texture2D" uid="uid://i0ix48x1vm1w" path="res://Assets/Stage1/floor7.png" id="1_jnpuu"]
+[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="2_60j3h"]
+[ext_resource type="Script" uid="uid://lmxes38elpar" path="res://Scripts/floor_7.gd" id="2_iftso"]
+[ext_resource type="Script" uid="uid://d3p0jyof7jot8" path="res://Scripts/portal7.gd" id="4_8le4b"]
+[ext_resource type="Script" uid="uid://cdewbl6lj14l5" path="res://Scripts/portal7_2.gd" id="5_mfjut"]
+[ext_resource type="Script" uid="uid://ch8ek14wdx7sm" path="res://Scripts/portal7_3.gd" id="6_xgc18"]
+[ext_resource type="Script" uid="uid://cj5h08fqo52ws" path="res://Scripts/portal7_4.gd" id="7_f4gw7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
+size = Vector2(512, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ropc"]
+size = Vector2(20, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vur88"]
+size = Vector2(20, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljw3i"]
+size = Vector2(506, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ddsu"]
+size = Vector2(11, 92)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8le4b"]
+size = Vector2(11, 94)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mfjut"]
+size = Vector2(30, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xgc18"]
+size = Vector2(16, 5)
+
+[node name="Floor1" type="Node2D" unique_id=1215284571]
+
+[node name="Room7" type="Sprite2D" parent="." unique_id=178336973]
+texture_filter = 1
+position = Vector2(0, -16)
+texture = ExtResource("1_jnpuu")
+script = ExtResource("2_iftso")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Room7" unique_id=404856588]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room7/StaticBody2D" unique_id=1027392099]
+position = Vector2(0, 84)
+shape = SubResource("RectangleShape2D_faqa8")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Room7/StaticBody2D" unique_id=1068221834]
+position = Vector2(-248, 16)
+shape = SubResource("RectangleShape2D_3ropc")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Room7/StaticBody2D" unique_id=1223041319]
+position = Vector2(248, 16)
+shape = SubResource("RectangleShape2D_vur88")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Room7/StaticBody2D" unique_id=792076843]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_ljw3i")
+
+[node name="Timer" type="Timer" parent="Room7" unique_id=2075347136]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Player" parent="." unique_id=345853380 instance=ExtResource("2_60j3h")]
+position = Vector2(-192, 7)
+
+[node name="Portal7" type="Area2D" parent="." unique_id=2047642964]
+script = ExtResource("4_8le4b")
+next_scene_path = "res://Scenes/Stage1/room6.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal7" unique_id=1499135775]
+position = Vector2(-242.5, -9)
+shape = SubResource("RectangleShape2D_0ddsu")
+debug_color = Color(0, 1, 0, 0.41960785)
+
+[node name="Portal7_2" type="Area2D" parent="." unique_id=238392029]
+script = ExtResource("5_mfjut")
+next_scene_path = "res://Scenes/Stage1/room8.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal7_2" unique_id=982282460]
+position = Vector2(242.5, -8)
+shape = SubResource("RectangleShape2D_8le4b")
+debug_color = Color(0, 1, 0, 0.41960785)
+
+[node name="Portal7_3" type="Area2D" parent="." unique_id=1936623423]
+script = ExtResource("6_xgc18")
+next_scene_path = "res://Scenes/Stage2/room12.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal7_3" unique_id=1390666737]
+position = Vector2(128, -46)
+shape = SubResource("RectangleShape2D_mfjut")
+debug_color = Color(0, 1, 0, 0.41960785)
+
+[node name="Portal7_4" type="Area2D" parent="." unique_id=917002575]
+script = ExtResource("7_f4gw7")
+next_scene_path = "res://Scenes/Stage1/room3.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal7_4" unique_id=1556872191]
+position = Vector2(-128, 59.5)
+shape = SubResource("RectangleShape2D_xgc18")
+debug_color = Color(0, 1, 0, 0.41960785)
+
+[connection signal="timeout" from="Room7/Timer" to="Room7" method="_on_timer_timeout"]
+[connection signal="body_entered" from="Portal7" to="Portal7" method="_on_body_entered"]
+[connection signal="body_entered" from="Portal7_2" to="Portal7_2" method="_on_body_entered"]
+[connection signal="body_entered" from="Portal7_3" to="Portal7_3" method="_on_body_entered"]
+[connection signal="body_entered" from="Portal7_4" to="Portal7_4" method="_on_body_entered"]

@@ -3,6 +3,9 @@ extends CharacterBody2D
 var speed : float = 120
 var atacando : bool = false
 
+func _ready () -> void:
+	name = "Player"
+
 func _process(_delta: float) -> void:
 	if atacando:
 		return 

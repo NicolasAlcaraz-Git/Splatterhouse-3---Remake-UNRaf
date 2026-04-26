@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://b75rwyb0uplge"]
+
+[ext_resource type="Texture2D" uid="uid://bejae0bvecro5" path="res://Assets/Stage2/floor16.png" id="1_n884v"]
+[ext_resource type="Script" uid="uid://ba1ly7ye3iam3" path="res://Scripts/floor_16.gd" id="2_3ipf1"]
+[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="2_wdn4j"]
+[ext_resource type="Script" uid="uid://8xxn0vyu1h8t" path="res://Scripts/portal16.gd" id="4_i0p6m"]
+[ext_resource type="Script" uid="uid://cb5asifpnkof4" path="res://Scripts/portal16_2.gd" id="5_juxpr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
+size = Vector2(512, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ropc"]
+size = Vector2(20, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vur88"]
+size = Vector2(20, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljw3i"]
+size = Vector2(506, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wc1ic"]
+size = Vector2(13, 95)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i0p6m"]
+size = Vector2(13, 95)
+
+[node name="Floor1" type="Node2D" unique_id=1215284571]
+
+[node name="Room16" type="Sprite2D" parent="." unique_id=178336973]
+texture_filter = 1
+position = Vector2(0, -16)
+texture = ExtResource("1_n884v")
+script = ExtResource("2_3ipf1")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Room16" unique_id=404856588]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room16/StaticBody2D" unique_id=1027392099]
+position = Vector2(0, 84)
+shape = SubResource("RectangleShape2D_faqa8")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Room16/StaticBody2D" unique_id=1068221834]
+position = Vector2(-246, 16)
+shape = SubResource("RectangleShape2D_3ropc")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Room16/StaticBody2D" unique_id=1223041319]
+position = Vector2(246, 16)
+shape = SubResource("RectangleShape2D_vur88")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Room16/StaticBody2D" unique_id=792076843]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_ljw3i")
+
+[node name="Timer" type="Timer" parent="Room16" unique_id=1432662060]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Player" parent="." unique_id=345853380 instance=ExtResource("2_wdn4j")]
+position = Vector2(-59, 6)
+
+[node name="Portal16" type="Area2D" parent="." unique_id=2119439376]
+script = ExtResource("4_i0p6m")
+next_scene_path = "res://Scenes/Stage2/room15.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal16" unique_id=1893984041]
+position = Vector2(-241.5, -7.5)
+shape = SubResource("RectangleShape2D_wc1ic")
+debug_color = Color(0, 1, 0, 0.41960785)
+
+[node name="Portal16_2" type="Area2D" parent="." unique_id=1297292025]
+script = ExtResource("5_juxpr")
+next_scene_path = "res://Scenes/Stage2/room17.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal16_2" unique_id=470592784]
+position = Vector2(241.5, -7.5)
+shape = SubResource("RectangleShape2D_i0p6m")
+debug_color = Color(0, 1, 0, 0.41960785)
+
+[connection signal="timeout" from="Room16/Timer" to="Room16" method="_on_timer_timeout"]
+[connection signal="body_entered" from="Portal16" to="Portal16" method="_on_body_entered"]
+[connection signal="body_entered" from="Portal16_2" to="Portal16_2" method="_on_body_entered"]

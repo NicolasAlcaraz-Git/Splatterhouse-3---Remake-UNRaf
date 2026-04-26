@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://c3hlleuptavki"]
+
+[ext_resource type="Texture2D" uid="uid://c0c3ddgcq2liw" path="res://Assets/Stage2/floor19.png" id="1_2hbdn"]
+[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="2_0nx7e"]
+[ext_resource type="Script" uid="uid://dm6k0fs1bjy00" path="res://Scripts/floor_19.gd" id="2_06mmv"]
+[ext_resource type="Script" uid="uid://dvu777n2k3t4y" path="res://Scripts/portal19.gd" id="4_v46k4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
+size = Vector2(512, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ropc"]
+size = Vector2(20, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vur88"]
+size = Vector2(20, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljw3i"]
+size = Vector2(506, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4snr2"]
+size = Vector2(13, 94)
+
+[node name="Floor1" type="Node2D" unique_id=1215284571]
+
+[node name="Room19" type="Sprite2D" parent="." unique_id=178336973]
+texture_filter = 1
+position = Vector2(0, -16)
+texture = ExtResource("1_2hbdn")
+script = ExtResource("2_06mmv")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Room19" unique_id=404856588]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room19/StaticBody2D" unique_id=1027392099]
+position = Vector2(0, 84)
+shape = SubResource("RectangleShape2D_faqa8")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Room19/StaticBody2D" unique_id=1068221834]
+position = Vector2(-118, 16)
+shape = SubResource("RectangleShape2D_3ropc")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Room19/StaticBody2D" unique_id=1223041319]
+position = Vector2(118, 16)
+shape = SubResource("RectangleShape2D_vur88")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Room19/StaticBody2D" unique_id=792076843]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_ljw3i")
+
+[node name="Timer" type="Timer" parent="Room19" unique_id=1138812465]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Player" parent="." unique_id=345853380 instance=ExtResource("2_0nx7e")]
+position = Vector2(-59, 6)
+
+[node name="Portal19" type="Area2D" parent="." unique_id=640625600]
+script = ExtResource("4_v46k4")
+next_scene_path = "res://Scenes/Stage2/room18.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal19" unique_id=1584748649]
+position = Vector2(-113.5, -8)
+shape = SubResource("RectangleShape2D_4snr2")
+debug_color = Color(0, 1, 0, 0.41960785)
+
+[connection signal="timeout" from="Room19/Timer" to="Room19" method="_on_timer_timeout"]
+[connection signal="body_entered" from="Portal19" to="Portal19" method="_on_body_entered"]
