@@ -431,7 +431,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h4iuc"]
-size = Vector2(26, 66)
+size = Vector2(26, 47)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(26, 28)
@@ -441,6 +441,7 @@ size = Vector2(61, 14)
 
 [node name="Player" type="CharacterBody2D" unique_id=348322079 groups=["player"]]
 z_index = 1
+collision_layer = 4
 script = ExtResource("2_vgqql")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=955774111]
@@ -450,7 +451,7 @@ animation = &"PunchZ"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1704483825]
-position = Vector2(-13, 7)
+position = Vector2(-13, 16.5)
 shape = SubResource("RectangleShape2D_h4iuc")
 debug_color = Color(1, 0.8392157, 0, 0.41960785)
 
@@ -460,7 +461,7 @@ zoom = Vector2(5.5, 4.2)
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=94472043]
+[node name="Hitbox" type="Area2D" parent="." unique_id=94472043 groups=["player"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=789454301]
 position = Vector2(-13, 11)

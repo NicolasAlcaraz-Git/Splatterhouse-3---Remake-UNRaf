@@ -15,7 +15,6 @@ var mirando_derecha: bool = true
 const PUNCH_ACTIVE_FRAME: int = 1
 
 func _ready() -> void:
-	print("SCRIPT CARGADO CORRECTAMENTE")
 	punch_collision.set_deferred("disabled", true)
 	hitbox.area_entered.connect(_on_hitbox_area_entered)
 	sprite.frame_changed.connect(_on_frame_changed)
@@ -24,8 +23,6 @@ func _ready() -> void:
 	punch_area.position.x = punch_offset_right
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("Punch"):
-		print("Punch presionado, atacando vale: ", atacando)
 
 	# Actualizar dirección SIEMPRE, incluso si está atacando
 	if Input.is_action_pressed("ui_right"):
@@ -75,7 +72,6 @@ func _actualizar_punch() -> void:
 		punch_area.position.x = punch_offset_right
 	else:
 		punch_area.position.x = -punch_offset_right
-	print("punch_area.x ahora vale: ", punch_area.position.x)
 
 func ejecutar_golpe() -> void:
 	atacando = true
@@ -102,6 +98,11 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if not area.is_in_group("zombie_punch"):
 		return
 	call_deferred("recibir_danio")
+	
+func recibir_golpe_jefe() -> void:
+	print("Jugador derribado por el jefe")
+	# Acá después ponés la animación de caída del jugador
+	hp -= 2  # el jefe hace más daño
 
 func recibir_danio() -> void:
 	hp -= 1
