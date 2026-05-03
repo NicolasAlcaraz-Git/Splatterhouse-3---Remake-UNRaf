@@ -3,6 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://cwrsvypf1ylvj" path="res://Assets/Enemies/Zombie.png" id="1_h3kin"]
 [ext_resource type="Script" uid="uid://dq7k1dm1y4uuv" path="res://Scripts/zombie.gd" id="1_n70j1"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vy0uf"]
+size = Vector2(23, 41)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_n70j1"]
 atlas = ExtResource("1_h3kin")
 region = Rect2(270, 90, 90, 90)
@@ -58,6 +61,14 @@ region = Rect2(90, 90, 90, 90)
 [sub_resource type="AtlasTexture" id="AtlasTexture_aw8xw"]
 atlas = ExtResource("1_h3kin")
 region = Rect2(0, 270, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwc4t"]
+atlas = ExtResource("1_h3kin")
+region = Rect2(90, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sprdo"]
+atlas = ExtResource("1_h3kin")
+region = Rect2(180, 180, 90, 90)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j0eft"]
 atlas = ExtResource("1_h3kin")
@@ -173,6 +184,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_hwc4t")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sprdo")
+}],
+"loop": true,
+"name": &"IdleZ",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_j0eft")
 }, {
 "duration": 1.0,
@@ -180,7 +207,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Punch",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -191,7 +218,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"PunchBlood",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -245,12 +272,19 @@ size = Vector2(29, 8)
 [node name="Zombie" type="Node2D" unique_id=1021773311]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=210882003]
+collision_layer = 4
 script = ExtResource("1_n70j1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=192070650]
+z_index = 1
+position = Vector2(-3.5, 12.5)
+shape = SubResource("RectangleShape2D_vy0uf")
+debug_color = Color(1, 0.8392157, 0, 0.41960785)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1500873439]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5tlni")
-animation = &"Walk"
+animation = &"PunchBlood"
 
 [node name="Hitbox" type="Area2D" parent="CharacterBody2D" unique_id=1110344762]
 

@@ -55,6 +55,7 @@ autostart = true
 position = Vector2(-59, 6)
 
 [node name="Portal19" type="Area2D" parent="." unique_id=640625600]
+collision_mask = 4
 script = ExtResource("4_v46k4")
 next_scene_path = "res://Scenes/Stage2/room18.tscn"
 

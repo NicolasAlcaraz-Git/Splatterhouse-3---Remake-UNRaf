@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cbf7ki66vk8c8" path="res://Assets/Enemies/FoulBeast.png" id="1_jahc5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_576mi"]
-size = Vector2(37, 37)
+size = Vector2(37, 44)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_852nt"]
 atlas = ExtResource("1_jahc5")
@@ -468,7 +468,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Lick",
-"speed": 12.0
+"speed": 13.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -479,7 +479,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Punch",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -490,7 +490,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"PunchBlood",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -562,7 +562,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jahc5"]
-size = Vector2(37, 62)
+size = Vector2(39, 49)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_852nt"]
 size = Vector2(37, 23)
@@ -577,19 +577,21 @@ collision_layer = 4
 script = ExtResource("1_852nt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1669328105]
-position = Vector2(0.5, 8.5)
+position = Vector2(0.5, 5)
 shape = SubResource("RectangleShape2D_576mi")
 debug_color = Color(1, 0.8392157, 0, 0.41960785)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=399769641]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_r0jbh")
-animation = &"WalkBlood"
+animation = &"Lick"
+frame = 6
+frame_progress = 1.0
 
 [node name="Hitbox" type="Area2D" parent="CharacterBody2D" unique_id=274339407]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Hitbox" unique_id=706764976]
-position = Vector2(6, -2)
+position = Vector2(-2.5, -8.5)
 shape = SubResource("RectangleShape2D_jahc5")
 debug_color = Color(0.9764706, 0, 0, 0.41960785)
 

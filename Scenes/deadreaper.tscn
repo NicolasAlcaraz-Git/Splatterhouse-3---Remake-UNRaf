@@ -3,6 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://bbs0mdq1hk3vv" path="res://Assets/Enemies/Deadreaper.png" id="1_j8vvj"]
 [ext_resource type="Script" uid="uid://cliw15r6hrevs" path="res://Scripts/deadreaper.gd" id="1_ui4ok"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4qlh"]
+size = Vector2(31, 50)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_xuiaa"]
 atlas = ExtResource("1_j8vvj")
 region = Rect2(180, 675, 180, 135)
@@ -62,6 +65,14 @@ region = Rect2(360, 135, 180, 135)
 [sub_resource type="AtlasTexture" id="AtlasTexture_3jdet"]
 atlas = ExtResource("1_j8vvj")
 region = Rect2(180, 405, 180, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wra4"]
+atlas = ExtResource("1_j8vvj")
+region = Rect2(0, 0, 180, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g83mx"]
+atlas = ExtResource("1_j8vvj")
+region = Rect2(0, 405, 180, 135)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qyx42"]
 atlas = ExtResource("1_j8vvj")
@@ -218,6 +229,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_3wra4")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g83mx")
+}],
+"loop": true,
+"name": &"IdleZ",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_qyx42")
 }, {
 "duration": 1.0,
@@ -234,7 +261,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Punch",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -254,7 +281,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"PunchBlood",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -355,17 +382,24 @@ animations = [{
 size = Vector2(31.5, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui4ok"]
-size = Vector2(59, 9)
+size = Vector2(71, 9)
 
 [node name="Deadreaper" type="Node2D" unique_id=1618990071]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=436741350]
+collision_layer = 4
 script = ExtResource("1_ui4ok")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1949524297]
+z_index = 1
+position = Vector2(-4.5, -2)
+shape = SubResource("RectangleShape2D_g4qlh")
+debug_color = Color(1, 0.8392157, 0, 0.41960785)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1182635800]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_kmwci")
-animation = &"WalkBlood"
+animation = &"PunchBlood"
 
 [node name="Hitbox" type="Area2D" parent="CharacterBody2D" unique_id=1281867816]
 

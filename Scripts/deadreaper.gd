@@ -2,10 +2,11 @@ extends CharacterBody2D
 
 enum State { IDLE, WALK, HIT, PUNCH, FALL, RECOVERY, DEATH }
 
-@export var speed: float = 40.0
+@export var speed: float = 60.0
 @export var detection_range: float = 200.0
 @export var punch_range: float = 45.0
-@export var punch_cooldown: float = 1.8
+@export var punch_cooldown: float = 0.5
+@export var idle_before_attack: float = 0.5
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var punch_collision: CollisionShape2D = $Punch/CollisionShape2D
@@ -13,22 +14,25 @@ enum State { IDLE, WALK, HIT, PUNCH, FALL, RECOVERY, DEATH }
 @onready var hitbox: Area2D = $Hitbox
 
 var state: State = State.IDLE
-var hit_count: int = 0        # golpes en el ciclo actual (se resetea cada caida)
-var fall_count: int = 0       # cuantas veces ha caido (0 a 3)
+var hit_count: int = 0
+var fall_count: int = 0
 var player: Node2D = null
 var punch_timer: float = 0.0
 var can_punch: bool = true
-var punch_offset_right: float = 30
+var idle_timer: float = 0.0
+var en_rango_ataque: bool = false
+var punch_offset_right: float = 30.0
+var knockback_velocity: Vector2 = Vector2.ZERO
 
 const PUNCH_ACTIVE_FRAME: int = 3
-const MAX_FALLS: int = 4  # muere a la 4ta caida
+const MAX_FALLS: int = 4
 
-# Animaciones según cantidad de caidas
-const ANIM_WALK     = ["Walk",      "Walk",      "WalkBlood",  "WalkBlood"]
-const ANIM_PUNCH    = ["Punch",     "Punch",     "PunchBlood", "PunchBlood"]
-const ANIM_HIT      = ["Hit",       "Hit",       "HitBlood",   "HitBlood"]
-const ANIM_FALL     = ["Fall",      "Fall",      "FallBlood",  "FallBlood"]
-const ANIM_RECOVERY = ["Recovery",  "RecoveryMid", "RecoveryBlood", "Death"]
+const ANIM_WALK     = ["Walk",     "Walk",        "WalkBlood",    "WalkBlood"]
+const ANIM_PUNCH    = ["Punch",    "Punch",        "PunchBlood",   "PunchBlood"]
+const ANIM_HIT      = ["Hit",      "Hit",          "HitBlood",     "HitBlood"]
+const ANIM_FALL     = ["Fall",     "Fall",         "FallBlood",    "FallBlood"]
+const ANIM_RECOVERY = ["Recovery", "RecoveryMid",  "RecoveryBlood", "Death"]
+const ANIM_IDLE     = ["Idle",     "Idle",         "IdleZ",        "IdleZ"]
 
 func _ready() -> void:
 	punch_collision.set_deferred("disabled", true)
@@ -39,7 +43,7 @@ func _ready() -> void:
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		player = players[0]
-		
+
 	sprite.flip_h = true
 
 	state = State.WALK
@@ -50,10 +54,16 @@ func _physics_process(delta: float) -> void:
 	_actualizar_punch()
 
 	match state:
-		State.IDLE:  _handle_idle()
-		State.WALK:  _handle_walk()
-		State.PUNCH, State.HIT, State.FALL, State.RECOVERY, State.DEATH:
+		State.IDLE:    _handle_idle(delta)
+		State.WALK:    _handle_walk()
+		State.PUNCH, State.HIT, State.RECOVERY, State.DEATH:
 			velocity = Vector2.ZERO
+		State.FALL:
+			if knockback_velocity.length() > 0:
+				global_position += knockback_velocity * delta
+				knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, 200.0 * delta)
+			else:
+				velocity = Vector2.ZERO
 
 	if not can_punch:
 		punch_timer -= delta
@@ -70,15 +80,27 @@ func _actualizar_punch() -> void:
 		punch_area.position.x = punch_offset_right
 
 
-func _handle_idle() -> void:
+func _handle_idle(delta: float) -> void:
 	velocity = Vector2.ZERO
 	if player == null:
 		return
+
 	var dist = global_position.distance_to(player.global_position)
-	if dist <= punch_range and can_punch:
-		_enter_punch()
-	elif dist <= detection_range:
+
+	if dist > detection_range:
+		en_rango_ataque = false
+		return
+
+	if dist > punch_range * 2.0 and not en_rango_ataque:
 		_enter_walk()
+		return
+
+	en_rango_ataque = true
+	if can_punch:
+		idle_timer += delta
+		if idle_timer >= idle_before_attack:
+			idle_timer = 0.0
+			_enter_punch()
 
 
 func _handle_walk() -> void:
@@ -88,24 +110,34 @@ func _handle_walk() -> void:
 
 	var dist = global_position.distance_to(player.global_position)
 
-	if dist <= punch_range and can_punch:
-		velocity = Vector2.ZERO
-		_enter_punch()
-		return
-
 	if dist > detection_range:
 		velocity = Vector2.ZERO
 		state = State.IDLE
 		return
 
+	if dist <= punch_range:
+		velocity = Vector2.ZERO
+		en_rango_ataque = true
+		_enter_idle_cercano()
+		return
+
 	var direction = (player.global_position - global_position).normalized()
 	velocity = direction * speed
-	if direction.x != 0:
+
+	if abs(direction.x) > 0.3:
 		sprite.flip_h = (direction.x < 0)
 
-# ── TRANSICIONES ──────────────────────────────
+
+func _enter_idle_cercano() -> void:
+	state = State.IDLE
+	idle_timer = 0.0
+	_play_animation(ANIM_IDLE[fall_count])
+
+
 func _enter_walk() -> void:
 	state = State.WALK
+	_play_animation(ANIM_WALK[fall_count])
+	hitbox.set_deferred("monitoring", true)
 	_play_animation(ANIM_WALK[fall_count])
 
 func _enter_punch() -> void:
@@ -122,34 +154,45 @@ func _enter_hit() -> void:
 func _enter_fall() -> void:
 	state = State.FALL
 	punch_collision.set_deferred("disabled", true)
+	hitbox.set_deferred("monitoring", false)
+	hitbox.set_deferred("monitorable", false)
 	_play_animation(ANIM_FALL[fall_count])
+	if player != null:
+		var dir_x = sign(global_position.x - player.global_position.x)
+		knockback_velocity = Vector2(dir_x * 150.0, 0.0)
 
 func _enter_recovery() -> void:
 	state = State.RECOVERY
 	hit_count = 0
-	_play_animation(ANIM_RECOVERY[fall_count - 1])  # ← fall_count - 1
+	hitbox.set_deferred("monitoring", false)
+	hitbox.set_deferred("monitorable", false)
+	_play_animation(ANIM_RECOVERY[fall_count - 1])
 
-# ── RECIBIR DAÑO ──────────────────────────────
+
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.get_parent() == self:
 		return
 	if area.is_in_group("player_punch"):
-		call_deferred("take_damage")
+		# Verificar si el jugador está transformado
+		var damage = 1
+		if player and player.is_z_form:
+			damage = 2
+		call_deferred("take_damage", damage)
 
-func take_damage() -> void:
+func take_damage(damage: int = 1) -> void:
 	if state == State.FALL or state == State.RECOVERY or state == State.DEATH:
 		return
-	hit_count += 1
+	hit_count += damage
 	if hit_count >= 4:
 		_enter_fall()
 	else:
 		_enter_hit()
 
-# ── SEÑALES SPRITE ────────────────────────────
+
 func _on_animation_finished() -> void:
 	match state:
 		State.HIT:
-			_enter_walk()
+			_enter_idle_cercano()
 		State.PUNCH:
 			punch_collision.set_deferred("disabled", true)
 			_enter_walk()
@@ -161,6 +204,8 @@ func _on_animation_finished() -> void:
 				_enter_recovery()
 		State.RECOVERY:
 			_enter_walk()
+		State.IDLE:
+			_play_animation(ANIM_IDLE[fall_count])
 
 func _on_frame_changed() -> void:
 	if state != State.PUNCH:
@@ -169,7 +214,7 @@ func _on_frame_changed() -> void:
 		return
 	punch_collision.set_deferred("disabled", sprite.frame != PUNCH_ACTIVE_FRAME)
 
-# ── MUERTE ────────────────────────────────────
+
 func _die() -> void:
 	state = State.DEATH
 	_play_animation("Death")

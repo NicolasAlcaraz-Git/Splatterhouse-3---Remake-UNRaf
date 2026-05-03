@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bswlcpol2bnt4" path="res://Scripts/floor_1.gd" id="2_sjfgq"]
 [ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="3_v7mot"]
 [ext_resource type="Script" uid="uid://c40w82el2kmvv" path="res://Scripts/portal1.gd" id="4_pu6wl"]
-[ext_resource type="PackedScene" uid="uid://b6dofwot2lsad" path="res://Scenes/deadreaper.tscn" id="5_o0o8e"]
+[ext_resource type="PackedScene" uid="uid://cqusnxrjdovv2" path="res://Scenes/zombie_fat.tscn" id="5_o0o8e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(512, 20)
@@ -56,6 +56,7 @@ autostart = true
 position = Vector2(-46, 4)
 
 [node name="Portal1" type="Area2D" parent="." unique_id=2055117183]
+collision_mask = 4
 script = ExtResource("4_pu6wl")
 next_scene_path = "res://Scenes/Stage1/room2.tscn"
 
@@ -64,7 +65,7 @@ position = Vector2(241, -8.125)
 shape = SubResource("RectangleShape2D_homi8")
 debug_color = Color(0, 1, 0, 0.41960785)
 
-[node name="Deadreaper" parent="." unique_id=1618990071 instance=ExtResource("5_o0o8e")]
+[node name="ZombieFat" parent="." unique_id=897472459 instance=ExtResource("5_o0o8e")]
 
 [connection signal="timeout" from="Room1/Timer" to="Room1" method="_on_timer_timeout"]
 [connection signal="body_entered" from="Portal1" to="Portal1" method="_on_body_entered"]

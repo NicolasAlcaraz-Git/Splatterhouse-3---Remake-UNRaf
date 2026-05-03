@@ -59,6 +59,7 @@ autostart = true
 position = Vector2(-192, 7)
 
 [node name="Portal5" type="Area2D" parent="." unique_id=57740878]
+collision_mask = 4
 script = ExtResource("4_edukf")
 next_scene_path = "res://Scenes/Stage1/room4.tscn"
 
@@ -68,6 +69,7 @@ shape = SubResource("RectangleShape2D_lb6ja")
 debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="Portal5_2" type="Area2D" parent="." unique_id=2121483351]
+collision_mask = 4
 script = ExtResource("5_8haea")
 next_scene_path = "res://Scenes/Stage1/room6.tscn"
 
