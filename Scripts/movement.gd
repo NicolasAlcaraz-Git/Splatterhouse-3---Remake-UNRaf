@@ -20,8 +20,7 @@ var caido: bool = false
 var muerto: bool = false
 var invulnerable: bool = false
 var caida_por_jefe: bool = false
-
-# Knockback al ser derribado
+var spawn_aplicado: bool = false
 var knockback_velocity: Vector2 = Vector2.ZERO
 
 const PUNCH_ACTIVE_FRAME: int = 1
@@ -35,6 +34,24 @@ func _ready() -> void:
 	sprite.frame_changed.connect(_on_frame_changed)
 	sprite.animation_finished.connect(_on_animation_finished)
 
+	# Spawn point
+	if GameData.spawn_point != "SpawnDefault":
+		print("spawn_point vale: ", GameData.spawn_point)
+		var spawn = _buscar_nodo(get_tree().current_scene, GameData.spawn_point)
+		if spawn:
+			print("encontrado: ", spawn.name, " pos: ", spawn.global_position)
+			global_position = spawn.global_position
+		else:
+			print("NO encontrado")
+
+func _buscar_nodo(nodo: Node, nombre: String) -> Node:
+	if nodo.name == nombre:
+		return nodo
+	for child in nodo.get_children():
+		var resultado = _buscar_nodo(child, nombre)
+		if resultado:
+			return resultado
+	return null
 
 func _process(delta: float) -> void:
 	if muerto or caido:

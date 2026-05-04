@@ -14,9 +14,14 @@ config/name="Splatterhouse 3 - Remake"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameData="*uid://4ss01y2oovmo"
+
 [global_group]
 
 zombie_punch=""
+enemy=""
 
 [input]
 

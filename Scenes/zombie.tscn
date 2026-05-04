@@ -269,7 +269,7 @@ size = Vector2(23, 61)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iyl7r"]
 size = Vector2(29, 8)
 
-[node name="Zombie" type="Node2D" unique_id=1021773311]
+[node name="Zombie" type="Node2D" unique_id=1021773311 groups=["enemy"]]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=210882003]
 collision_layer = 4

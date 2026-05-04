@@ -384,7 +384,7 @@ size = Vector2(31.5, 50)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui4ok"]
 size = Vector2(71, 9)
 
-[node name="Deadreaper" type="Node2D" unique_id=1618990071]
+[node name="Deadreaper" type="Node2D" unique_id=1618990071 groups=["enemy"]]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=436741350]
 collision_layer = 4

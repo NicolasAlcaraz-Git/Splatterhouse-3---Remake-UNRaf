@@ -212,6 +212,12 @@ func _on_frame_changed() -> void:
 # ──────────────────────────────────────────────
 func _die() -> void:
 	state = State.DEAD
+	# Subir dos niveles para llegar al Floor1 que tiene el script
+	var room = get_parent().get_parent()
+	print("buscando room en: ", room.name if room else "null")
+	if room and room.has_method("enemy_died"):
+		print("llamando enemy_died")
+		room.enemy_died()
 	await get_tree().create_timer(0.4).timeout
 	queue_free()
 

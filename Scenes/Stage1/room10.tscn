@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cfy5dqu1t81yk"]
 
 [ext_resource type="Texture2D" uid="uid://bd3jhaol1igri" path="res://Assets/Stage1/floor10.png" id="1_k73c8"]
-[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="2_j2yc3"]
 [ext_resource type="Script" uid="uid://cof82jcgigp6f" path="res://Scripts/floor_10.gd" id="2_k724r"]
 [ext_resource type="Script" uid="uid://brlq2i58vocsu" path="res://Scripts/portal10.gd" id="4_nn6tg"]
 [ext_resource type="Script" uid="uid://ccucrnv771lt3" path="res://Scripts/portal10_2.gd" id="5_bnrq1"]
@@ -50,34 +49,33 @@ shape = SubResource("RectangleShape2D_vur88")
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_ljw3i")
 
-[node name="Timer" type="Timer" parent="Room10" unique_id=1976724867]
-wait_time = 5.0
-one_shot = true
-autostart = true
-
-[node name="Player" parent="." unique_id=345853380 instance=ExtResource("2_j2yc3")]
-position = Vector2(-60, 7)
-
-[node name="Portal10" type="Area2D" parent="." unique_id=1201539636]
+[node name="Portal10" type="Area2D" parent="Room10" unique_id=1201539636]
+position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("4_nn6tg")
 next_scene_path = "res://Scenes/Stage1/room9.tscn"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal10" unique_id=613929011]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room10/Portal10" unique_id=613929011]
 position = Vector2(-497, -8)
 shape = SubResource("RectangleShape2D_g3gv1")
 debug_color = Color(0, 1, 0, 0.41960785)
 
-[node name="Portal10_2" type="Area2D" parent="." unique_id=504814384]
+[node name="Portal10_2" type="Area2D" parent="Room10" unique_id=504814384]
+position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("5_bnrq1")
 next_scene_path = "res://Scenes/Stage2/room11.tscn"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal10_2" unique_id=1430882442]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room10/Portal10_2" unique_id=1430882442]
 position = Vector2(497.25, -8)
 shape = SubResource("RectangleShape2D_nn6tg")
 debug_color = Color(0, 1, 0, 0.41960785)
 
-[connection signal="timeout" from="Room10/Timer" to="Room10" method="_on_timer_timeout"]
-[connection signal="body_entered" from="Portal10" to="Portal10" method="_on_body_entered"]
-[connection signal="body_entered" from="Portal10_2" to="Portal10_2" method="_on_body_entered"]
+[node name="Door10left" type="Marker2D" parent="Room10" unique_id=149066197]
+position = Vector2(-470, 15)
+
+[node name="Door10right" type="Marker2D" parent="Room10" unique_id=1514777109]
+position = Vector2(470, 15)
+
+[connection signal="body_entered" from="Room10/Portal10" to="Room10/Portal10" method="_on_body_entered"]
+[connection signal="body_entered" from="Room10/Portal10_2" to="Room10/Portal10_2" method="_on_body_entered"]

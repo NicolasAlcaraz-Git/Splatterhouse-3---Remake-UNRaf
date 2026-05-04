@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://fxqqe7b2qv6i"]
 
 [ext_resource type="Texture2D" uid="uid://y3n0i0kp7eyd" path="res://Assets/Stage2/floor17.png" id="1_jaef4"]
-[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="2_mdrbe"]
 [ext_resource type="Script" uid="uid://2jrp2ab5xl71" path="res://Scripts/floor_17.gd" id="2_xchq1"]
 [ext_resource type="Script" uid="uid://l0wlwok087ld" path="res://Scripts/portal17.gd" id="4_3u5lc"]
 [ext_resource type="Script" uid="uid://b6jsw0yt4hj0a" path="res://Scripts/portal17_2.gd" id="5_urfm2"]
@@ -54,45 +53,48 @@ shape = SubResource("RectangleShape2D_vur88")
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_ljw3i")
 
-[node name="Timer" type="Timer" parent="Room17" unique_id=1551459071]
-wait_time = 5.0
-one_shot = true
-autostart = true
-
-[node name="Player" parent="." unique_id=345853380 instance=ExtResource("2_mdrbe")]
-position = Vector2(-147, 9)
-
-[node name="Portal17" type="Area2D" parent="." unique_id=1637964997]
+[node name="Portal17" type="Area2D" parent="Room17" unique_id=1637964997]
+position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("4_3u5lc")
 next_scene_path = "res://Scenes/Stage2/room16.tscn"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal17" unique_id=1661053115]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room17/Portal17" unique_id=1661053115]
 position = Vector2(-241.25, -8.5)
 shape = SubResource("RectangleShape2D_3u5lc")
 debug_color = Color(0, 1, 0, 0.41960785)
 
-[node name="Portal17_2" type="Area2D" parent="." unique_id=228226763]
+[node name="Portal17_2" type="Area2D" parent="Room17" unique_id=228226763]
+position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("5_urfm2")
 next_scene_path = "res://Scenes/Stage2/room11.tscn"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal17_2" unique_id=1529873837]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room17/Portal17_2" unique_id=1529873837]
 position = Vector2(-128, 59.5)
 shape = SubResource("RectangleShape2D_urfm2")
 debug_color = Color(0, 1, 0, 0.41960785)
 
-[node name="Portal17_3" type="Area2D" parent="." unique_id=1818137350]
+[node name="Portal17_3" type="Area2D" parent="Room17" unique_id=1818137350]
+position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("6_0ggan")
 next_scene_path = "res://Scenes/Stage2/room18.tscn"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal17_3" unique_id=887330248]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room17/Portal17_3" unique_id=887330248]
 position = Vector2(242, -5.5)
 shape = SubResource("RectangleShape2D_8t1jo")
 debug_color = Color(0, 1, 0, 0.41960785)
 
-[connection signal="timeout" from="Room17/Timer" to="Room17" method="_on_timer_timeout"]
-[connection signal="body_entered" from="Portal17" to="Portal17" method="_on_body_entered"]
-[connection signal="body_entered" from="Portal17_2" to="Portal17_2" method="_on_body_entered"]
-[connection signal="body_entered" from="Portal17_3" to="Portal17_3" method="_on_body_entered"]
+[node name="Door17left" type="Marker2D" parent="Room17" unique_id=202593674]
+position = Vector2(-220, 15)
+
+[node name="Door17down" type="Marker2D" parent="Room17" unique_id=138990356]
+position = Vector2(-130, 40)
+
+[node name="Door17right" type="Marker2D" parent="Room17" unique_id=441963281]
+position = Vector2(220, 15)
+
+[connection signal="body_entered" from="Room17/Portal17" to="Room17/Portal17" method="_on_body_entered"]
+[connection signal="body_entered" from="Room17/Portal17_2" to="Room17/Portal17_2" method="_on_body_entered"]
+[connection signal="body_entered" from="Room17/Portal17_3" to="Room17/Portal17_3" method="_on_body_entered"]
