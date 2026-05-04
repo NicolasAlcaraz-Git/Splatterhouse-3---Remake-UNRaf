@@ -38,4 +38,4 @@ func _abrir_portales() -> void:
 		floor_sprite.texture = fondo_abierto
 
 func _process(_delta: float) -> void:
-	pass  # ya no necesitamos el process
+	pass

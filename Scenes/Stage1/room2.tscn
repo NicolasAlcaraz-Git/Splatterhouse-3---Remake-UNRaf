@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://buwvb1ndgfhfh"]
 
 [ext_resource type="Texture2D" uid="uid://c40xamki138dh" path="res://Assets/Stage1/floor2.png" id="1_f5xf4"]
-[ext_resource type="Script" uid="uid://dfuyvc1h84xx2" path="res://Scripts/floor_2.gd" id="2_i0r80"]
+[ext_resource type="Script" uid="uid://dqlxhqlq8swd2" path="res://ScriptsRooms/room_2.gd" id="1_i0r80"]
 [ext_resource type="Script" uid="uid://0qfrakyrrubj" path="res://Scripts/portal2.gd" id="4_5lsbj"]
 [ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="5_f5xf4"]
 [ext_resource type="Script" uid="uid://7863ww6a5i16" path="res://Scripts/portal2_2.gd" id="5_fw1x0"]
+[ext_resource type="PackedScene" uid="uid://caqxv6dl48qfx" path="res://Scenes/zombie.tscn" id="6_i0r80"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(512, 20)
@@ -24,13 +25,13 @@ size = Vector2(11, 93.75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mwnh4"]
 size = Vector2(30, 34)
 
-[node name="Floor1" type="Node2D" unique_id=1215284571]
+[node name="Floor1" type="Node2D" unique_id=1215284571 groups=["room"]]
+script = ExtResource("1_i0r80")
 
 [node name="Room2" type="Sprite2D" parent="." unique_id=178336973]
 texture_filter = 1
 position = Vector2(0, -16)
 texture = ExtResource("1_f5xf4")
-script = ExtResource("2_i0r80")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Room2" unique_id=404856588]
 
@@ -55,6 +56,7 @@ position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("4_5lsbj")
 next_scene_path = "res://Scenes/Stage1/room3.tscn"
+spawn_point_name = "Door3left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room2/Portal2_1" unique_id=754875425]
 position = Vector2(242.5, -8.125)
@@ -66,6 +68,7 @@ position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("5_fw1x0")
 next_scene_path = "res://Scenes/Stage1/room6.tscn"
+spawn_point_name = "Door6down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room2/Portal2_2" unique_id=1730041707]
 position = Vector2(128, -46)
@@ -74,7 +77,6 @@ debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="Door2left" type="Marker2D" parent="Room2" unique_id=328373317]
 position = Vector2(-220, 15)
-gizmo_extents = 0.0
 
 [node name="Door2up" type="Marker2D" parent="Room2" unique_id=1231177118]
 position = Vector2(130, 15)
@@ -82,7 +84,16 @@ position = Vector2(130, 15)
 [node name="Door2right" type="Marker2D" parent="Room2" unique_id=1885344949]
 position = Vector2(220, 15)
 
-[node name="Player" parent="Room2" unique_id=348322079 instance=ExtResource("5_f5xf4")]
+[node name="Player" parent="." unique_id=348322079 instance=ExtResource("5_f5xf4")]
+
+[node name="Zombie" parent="." unique_id=1021773311 instance=ExtResource("6_i0r80")]
+position = Vector2(160, 11)
+
+[node name="Zombie2" parent="." unique_id=1767890430 instance=ExtResource("6_i0r80")]
+position = Vector2(65, 4)
+
+[node name="Zombie3" parent="." unique_id=1046495527 instance=ExtResource("6_i0r80")]
+position = Vector2(-74, 3)
 
 [connection signal="body_entered" from="Room2/Portal2_1" to="Room2/Portal2_1" method="_on_body_entered"]
 [connection signal="body_entered" from="Room2/Portal2_2" to="Room2/Portal2_2" method="_on_body_entered"]

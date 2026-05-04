@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cpdafurhw0pvp" path="res://ScriptsRooms/room_1.gd" id="1_o0o8e"]
 [ext_resource type="Texture2D" uid="uid://c3voserxbx3cf" path="res://Assets/Stage1/floor1.png" id="1_qlk30"]
-[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="3_v7mot"]
+[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="4_o0o8e"]
 [ext_resource type="Script" uid="uid://c40w82el2kmvv" path="res://Scripts/portal1.gd" id="4_pu6wl"]
 [ext_resource type="PackedScene" uid="uid://caqxv6dl48qfx" path="res://Scenes/zombie.tscn" id="6_wn1mc"]
 
@@ -21,7 +21,7 @@ size = Vector2(20, 125)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ljw3i"]
 size = Vector2(506, 20)
 
-[node name="Floor1" type="Node2D" unique_id=1215284571]
+[node name="Floor1" type="Node2D" unique_id=1215284571 groups=["room"]]
 script = ExtResource("1_o0o8e")
 
 [node name="Room1" type="Sprite2D" parent="." unique_id=178336973]
@@ -59,9 +59,13 @@ shape = SubResource("RectangleShape2D_vur88")
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_ljw3i")
 
-[node name="Zombie" parent="." unique_id=1021773311 instance=ExtResource("6_wn1mc")]
+[node name="Player" parent="." unique_id=348322079 instance=ExtResource("4_o0o8e")]
+position = Vector2(-191, 7)
 
-[node name="Player" parent="." unique_id=345853380 instance=ExtResource("3_v7mot")]
-position = Vector2(-46, 4)
+[node name="Zombie" parent="." unique_id=1021773311 instance=ExtResource("6_wn1mc")]
+position = Vector2(146, 12)
+
+[node name="Zombie2" parent="." unique_id=772327833 instance=ExtResource("6_wn1mc")]
+position = Vector2(14, 3)
 
 [connection signal="body_entered" from="Room1/Portal1" to="Room1/Portal1" method="_on_body_entered"]

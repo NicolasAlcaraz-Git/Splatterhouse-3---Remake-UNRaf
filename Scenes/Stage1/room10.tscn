@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://cfy5dqu1t81yk"]
 
+[ext_resource type="Script" uid="uid://bek1scxg1dwa3" path="res://ScriptsRooms/room_10.gd" id="1_fkkia"]
 [ext_resource type="Texture2D" uid="uid://bd3jhaol1igri" path="res://Assets/Stage1/floor10.png" id="1_k73c8"]
-[ext_resource type="Script" uid="uid://cof82jcgigp6f" path="res://Scripts/floor_10.gd" id="2_k724r"]
 [ext_resource type="Script" uid="uid://brlq2i58vocsu" path="res://Scripts/portal10.gd" id="4_nn6tg"]
 [ext_resource type="Script" uid="uid://ccucrnv771lt3" path="res://Scripts/portal10_2.gd" id="5_bnrq1"]
+[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="5_fkkia"]
+[ext_resource type="PackedScene" uid="uid://b6dofwot2lsad" path="res://Scenes/deadreaper.tscn" id="6_8nnx6"]
+[ext_resource type="PackedScene" uid="uid://cqusnxrjdovv2" path="res://Scenes/zombie_fat.tscn" id="7_4ui5g"]
+[ext_resource type="PackedScene" uid="uid://caqxv6dl48qfx" path="res://Scenes/zombie.tscn" id="8_ksfb5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(1026, 20)
@@ -23,13 +27,13 @@ size = Vector2(12, 94)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn6tg"]
 size = Vector2(12.5, 94)
 
-[node name="Floor1" type="Node2D" unique_id=1215284571]
+[node name="Floor1" type="Node2D" unique_id=1215284571 groups=["room"]]
+script = ExtResource("1_fkkia")
 
 [node name="Room10" type="Sprite2D" parent="." unique_id=178336973]
 texture_filter = 1
 position = Vector2(0, -16)
 texture = ExtResource("1_k73c8")
-script = ExtResource("2_k724r")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Room10" unique_id=404856588]
 
@@ -54,6 +58,7 @@ position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("4_nn6tg")
 next_scene_path = "res://Scenes/Stage1/room9.tscn"
+spawn_point_name = "Door9right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room10/Portal10" unique_id=613929011]
 position = Vector2(-497, -8)
@@ -65,6 +70,7 @@ position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("5_bnrq1")
 next_scene_path = "res://Scenes/Stage2/room11.tscn"
+spawn_point_name = "Door1left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room10/Portal10_2" unique_id=1430882442]
 position = Vector2(497.25, -8)
@@ -76,6 +82,50 @@ position = Vector2(-470, 15)
 
 [node name="Door10right" type="Marker2D" parent="Room10" unique_id=1514777109]
 position = Vector2(470, 15)
+
+[node name="Player" parent="." unique_id=348322079 instance=ExtResource("5_fkkia")]
+
+[node name="Deadreaper" parent="." unique_id=1618990071 instance=ExtResource("6_8nnx6")]
+position = Vector2(-305, 17)
+
+[node name="Deadreaper2" parent="." unique_id=398780652 instance=ExtResource("6_8nnx6")]
+position = Vector2(-228, 4)
+
+[node name="ZombieFat" parent="." unique_id=897472459 instance=ExtResource("7_4ui5g")]
+position = Vector2(-161, 12)
+
+[node name="Deadreaper3" parent="." unique_id=1576368183 instance=ExtResource("6_8nnx6")]
+position = Vector2(345, 14)
+
+[node name="Deadreaper4" parent="." unique_id=801074197 instance=ExtResource("6_8nnx6")]
+position = Vector2(278, 6)
+
+[node name="ZombieFat2" parent="." unique_id=902661964 instance=ExtResource("7_4ui5g")]
+position = Vector2(200, 15)
+
+[node name="Zombie" parent="." unique_id=1021773311 instance=ExtResource("8_ksfb5")]
+position = Vector2(115, 6)
+
+[node name="Zombie2" parent="." unique_id=115694729 instance=ExtResource("8_ksfb5")]
+position = Vector2(-85, 9)
+
+[node name="Zombie3" parent="." unique_id=1324235940 instance=ExtResource("8_ksfb5")]
+position = Vector2(-24, 4)
+
+[node name="Zombie4" parent="." unique_id=890402631 instance=ExtResource("8_ksfb5")]
+position = Vector2(46, 6)
+
+[node name="ZombieFat3" parent="." unique_id=67039026 instance=ExtResource("7_4ui5g")]
+position = Vector2(-371, 6)
+
+[node name="ZombieFat4" parent="." unique_id=382193757 instance=ExtResource("7_4ui5g")]
+position = Vector2(417, 10)
+
+[node name="Zombie5" parent="." unique_id=84155418 instance=ExtResource("8_ksfb5")]
+position = Vector2(-261, 19)
+
+[node name="Zombie6" parent="." unique_id=853740673 instance=ExtResource("8_ksfb5")]
+position = Vector2(310, 21)
 
 [connection signal="body_entered" from="Room10/Portal10" to="Room10/Portal10" method="_on_body_entered"]
 [connection signal="body_entered" from="Room10/Portal10_2" to="Room10/Portal10_2" method="_on_body_entered"]

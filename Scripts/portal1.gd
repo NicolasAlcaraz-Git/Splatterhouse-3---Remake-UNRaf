@@ -1,4 +1,3 @@
-# portal1.gd
 extends Area2D
 
 @export var next_scene_path: String

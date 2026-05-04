@@ -284,7 +284,7 @@ debug_color = Color(1, 0.8392157, 0, 0.41960785)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1500873439]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5tlni")
-animation = &"PunchBlood"
+animation = &"Idle"
 
 [node name="Hitbox" type="Area2D" parent="CharacterBody2D" unique_id=1110344762]
 

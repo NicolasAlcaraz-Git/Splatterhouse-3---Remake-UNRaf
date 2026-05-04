@@ -719,7 +719,7 @@ script = ExtResource("2_vgqql")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=955774111]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_7dp3o")
-animation = &"Fall"
+animation = &"Idle"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1704483825]

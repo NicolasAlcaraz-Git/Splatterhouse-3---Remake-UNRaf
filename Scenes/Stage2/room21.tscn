@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://yplfnms7vaht"]
 
 [ext_resource type="Texture2D" uid="uid://b2as1mypr2n03" path="res://Assets/Stage2/floor21.png" id="1_vlcbp"]
+[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="2_davmr"]
+[ext_resource type="PackedScene" uid="uid://k7i0ym8l51au" path="res://Scenes/foul_beast.tscn" id="3_k5yjc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(512, 20)
@@ -41,3 +43,8 @@ shape = SubResource("RectangleShape2D_ljw3i")
 
 [node name="Door21left" type="Marker2D" parent="Floor1" unique_id=108850613]
 position = Vector2(-220, 15)
+
+[node name="Player" parent="." unique_id=348322079 instance=ExtResource("2_davmr")]
+
+[node name="FoulBeast" parent="." unique_id=355182240 instance=ExtResource("3_k5yjc")]
+position = Vector2(182, 10)

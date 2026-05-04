@@ -218,7 +218,12 @@ func _on_frame_changed() -> void:
 func _die() -> void:
 	state = State.DEATH
 	_play_animation("Death")
-	await get_tree().create_timer(5.0).timeout
+	var rooms = get_tree().get_nodes_in_group("room")
+	for room in rooms:
+		if is_ancestor_of(self) == false and room.has_method("enemy_died"):
+			room.enemy_died()
+			break
+	await get_tree().create_timer(2).timeout
 	queue_free()
 
 func _play_animation(anim_name: String) -> void:

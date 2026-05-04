@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://btsl5y663hp8a"]
 
 [ext_resource type="Texture2D" uid="uid://b47borksorcc4" path="res://Assets/Stage2/floor20.png" id="1_x2hkn"]
-[ext_resource type="Script" uid="uid://bvljarespo502" path="res://Scripts/floor_20.gd" id="2_d2ox4"]
+[ext_resource type="Script" uid="uid://cyx2oh5n2lwqt" path="res://ScriptsRooms/room_20.gd" id="1_yc54u"]
 [ext_resource type="Script" uid="uid://cj4aslhpf214f" path="res://Scripts/portal20.gd" id="4_4x8u1"]
 [ext_resource type="Script" uid="uid://blqfvcvknau6q" path="res://Scripts/portal20_2.gd" id="5_cspch"]
+[ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="5_yc54u"]
+[ext_resource type="PackedScene" uid="uid://cqusnxrjdovv2" path="res://Scenes/zombie_fat.tscn" id="6_gtyy2"]
+[ext_resource type="PackedScene" uid="uid://b6dofwot2lsad" path="res://Scenes/deadreaper.tscn" id="7_viiu1"]
+[ext_resource type="PackedScene" uid="uid://caqxv6dl48qfx" path="res://Scenes/zombie.tscn" id="8_pteg6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(1534, 20)
@@ -23,13 +27,13 @@ size = Vector2(16, 5.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_on3gr"]
 size = Vector2(12.75, 93.5)
 
-[node name="Floor1" type="Node2D" unique_id=1215284571]
+[node name="Floor1" type="Node2D" unique_id=1215284571 groups=["room"]]
+script = ExtResource("1_yc54u")
 
 [node name="Room20" type="Sprite2D" parent="." unique_id=178336973]
 texture_filter = 1
 position = Vector2(0, -16)
 texture = ExtResource("1_x2hkn")
-script = ExtResource("2_d2ox4")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Room20" unique_id=404856588]
 
@@ -54,6 +58,7 @@ position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("4_4x8u1")
 next_scene_path = "res://Scenes/Stage2/room14.tscn"
+spawn_point_name = "Door14up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room20/Portal20" unique_id=2019704609]
 position = Vector2(-641, 59.75)
@@ -65,6 +70,7 @@ position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("5_cspch")
 next_scene_path = "res://Scenes/Stage2/room21.tscn"
+spawn_point_name = "Door21left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room20/Portal20_2" unique_id=150616890]
 position = Vector2(752.625, -7.75)
@@ -73,6 +79,62 @@ debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="Door20down" type="Marker2D" parent="Room20" unique_id=1708022523]
 position = Vector2(-640, 30)
+
+[node name="Player" parent="." unique_id=348322079 instance=ExtResource("5_yc54u")]
+
+[node name="ZombieFat" parent="." unique_id=897472459 instance=ExtResource("6_gtyy2")]
+position = Vector2(-590, 11)
+
+[node name="ZombieFat2" parent="." unique_id=355762258 instance=ExtResource("6_gtyy2")]
+position = Vector2(-488, 0)
+
+[node name="ZombieFat3" parent="." unique_id=1681078951 instance=ExtResource("6_gtyy2")]
+position = Vector2(-156, 18)
+
+[node name="ZombieFat4" parent="." unique_id=758133260 instance=ExtResource("6_gtyy2")]
+position = Vector2(-80, 2)
+
+[node name="ZombieFat5" parent="." unique_id=1053888591 instance=ExtResource("6_gtyy2")]
+position = Vector2(299, 17)
+
+[node name="ZombieFat6" parent="." unique_id=657788423 instance=ExtResource("6_gtyy2")]
+position = Vector2(395, 2)
+
+[node name="Deadreaper" parent="." unique_id=1618990071 instance=ExtResource("7_viiu1")]
+position = Vector2(-404, 26)
+
+[node name="Deadreaper2" parent="." unique_id=1429414140 instance=ExtResource("7_viiu1")]
+position = Vector2(-339, 5)
+
+[node name="Deadreaper3" parent="." unique_id=1879827786 instance=ExtResource("7_viiu1")]
+position = Vector2(1, 26)
+
+[node name="Deadreaper4" parent="." unique_id=1743806015 instance=ExtResource("7_viiu1")]
+position = Vector2(93, 2)
+
+[node name="Zombie" parent="." unique_id=1021773311 instance=ExtResource("8_pteg6")]
+position = Vector2(-268, 18)
+
+[node name="Zombie2" parent="." unique_id=1024831736 instance=ExtResource("8_pteg6")]
+position = Vector2(-220, 4)
+
+[node name="Zombie3" parent="." unique_id=2009992702 instance=ExtResource("8_pteg6")]
+position = Vector2(157, 16)
+
+[node name="Zombie4" parent="." unique_id=1207412133 instance=ExtResource("8_pteg6")]
+position = Vector2(225, 0)
+
+[node name="Deadreaper5" parent="." unique_id=1506240657 instance=ExtResource("7_viiu1")]
+position = Vector2(484, 29)
+
+[node name="Deadreaper6" parent="." unique_id=1530206011 instance=ExtResource("7_viiu1")]
+position = Vector2(548, 3)
+
+[node name="Zombie5" parent="." unique_id=803480738 instance=ExtResource("8_pteg6")]
+position = Vector2(619, 18)
+
+[node name="Zombie6" parent="." unique_id=429069742 instance=ExtResource("8_pteg6")]
+position = Vector2(695, -5)
 
 [connection signal="body_entered" from="Room20/Portal20" to="Room20/Portal20" method="_on_body_entered"]
 [connection signal="body_entered" from="Room20/Portal20_2" to="Room20/Portal20_2" method="_on_body_entered"]

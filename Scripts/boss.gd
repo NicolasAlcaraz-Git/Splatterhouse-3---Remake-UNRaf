@@ -9,7 +9,7 @@ enum State {
 @export var stalk_radius_x: float = 80.0
 @export var stalk_radius_y: float = 20.0
 @export var stalk_time: float = 3.0
-@export var defense_chance: float = 0.60
+@export var defense_chance: float = 0.50
 @export var cooldown_after_hit: float = 2.0
 @export var hits_to_interrupt: int = 1
 
@@ -40,7 +40,7 @@ const PUNCH_ACTIVE_FRAME: int = 1
 const LICK_ACTIVE_FRAME: int = 3
 const MAX_HITS_PHASE1: int = 32
 const MAX_HITS_PHASE2: int = 16
-const MAX_GOLPES_SIN_ESCAPAR: int = 1
+const MAX_GOLPES_SIN_ESCAPAR: int = 2
 
 func _ready() -> void:
 	punch_collision.set_deferred("disabled", true)

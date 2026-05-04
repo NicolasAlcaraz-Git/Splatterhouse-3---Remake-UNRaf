@@ -22,6 +22,7 @@ GameData="*uid://4ss01y2oovmo"
 
 zombie_punch=""
 enemy=""
+room=""
 
 [input]
 
