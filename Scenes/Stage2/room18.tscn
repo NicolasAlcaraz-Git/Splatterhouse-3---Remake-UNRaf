@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b6dofwot2lsad" path="res://Scenes/deadreaper.tscn" id="7_8k3gi"]
 [ext_resource type="PackedScene" uid="uid://caqxv6dl48qfx" path="res://Scenes/zombie.tscn" id="8_11ams"]
 [ext_resource type="PackedScene" uid="uid://cqusnxrjdovv2" path="res://Scenes/zombie_fat.tscn" id="9_37esn"]
+[ext_resource type="PackedScene" uid="uid://d4cuklwikl1g2" path="res://Scenes/hud.tscn" id="10_11ams"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(512, 20)
@@ -118,6 +119,8 @@ position = Vector2(-9, 11)
 
 [node name="ZombieFat2" parent="." unique_id=2089107775 instance=ExtResource("9_37esn")]
 position = Vector2(-73, 0)
+
+[node name="HUD" parent="." unique_id=328279809 instance=ExtResource("10_11ams")]
 
 [connection signal="body_entered" from="Room18/Portal18" to="Room18/Portal18" method="_on_body_entered"]
 [connection signal="body_entered" from="Room18/Portal18_2" to="Room18/Portal18_2" method="_on_body_entered"]

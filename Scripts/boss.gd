@@ -9,7 +9,7 @@ enum State {
 @export var stalk_radius_x: float = 80.0
 @export var stalk_radius_y: float = 20.0
 @export var stalk_time: float = 3.0
-@export var defense_chance: float = 0.50
+@export var defense_chance: float = 0.40
 @export var cooldown_after_hit: float = 2.0
 @export var hits_to_interrupt: int = 1
 
@@ -38,8 +38,8 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 
 const PUNCH_ACTIVE_FRAME: int = 1
 const LICK_ACTIVE_FRAME: int = 3
-const MAX_HITS_PHASE1: int = 32
-const MAX_HITS_PHASE2: int = 16
+const MAX_HITS_PHASE1: int = 28
+const MAX_HITS_PHASE2: int = 12
 const MAX_GOLPES_SIN_ESCAPAR: int = 2
 
 func _ready() -> void:
@@ -50,6 +50,7 @@ func _ready() -> void:
 	hitbox.area_entered.connect(_on_hitbox_area_entered)
 	punch_area.area_entered.connect(_on_punch_area_entered)
 	lick_area.area_entered.connect(_on_lick_area_entered)
+	_play_intro_music()
 
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
@@ -57,6 +58,22 @@ func _ready() -> void:
 
 	stalk_direction = 1.0 if randf() > 0.5 else -1.0
 	_play_animation("Eating")
+	
+func _play_intro_music() -> void:
+	GameData.play_music_fresh("res://Assets/Sound/Intro.mp3")
+	# Cuando termine la intro, arrancar el bucle
+	GameData.music_player.finished.connect(_on_intro_finished)
+	
+func _on_intro_finished() -> void:
+	GameData.music_player.finished.disconnect(_on_intro_finished)
+	GameData.play_music_fresh("res://Assets/Sound/Bucle.mp3")
+	
+func _play_sfx(path: String) -> void:
+	var sfx = AudioStreamPlayer2D.new()
+	sfx.stream = load(path)
+	add_child(sfx)
+	sfx.play()
+	sfx.finished.connect(sfx.queue_free)
 
 
 func _physics_process(delta: float) -> void:
@@ -217,6 +234,11 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.get_parent() == self:
 		return
 	if area.is_in_group("player_punch"):
+		var player_node = get_tree().get_first_node_in_group("player")
+		if player_node and player_node.is_z_form:
+			_play_sfx("res://Assets/Sound/PunchZ.mp3")
+		else:
+			_play_sfx("res://Assets/Sound/Punch.mp3")
 		var damage = 1
 		if player and player.has_method("golpes_para_derribar"):
 			damage = player.golpes_para_derribar()
@@ -312,6 +334,7 @@ func _on_animation_finished() -> void:
 				_play_animation("Head")
 			else:
 				if total_hits_phase2 >= MAX_HITS_PHASE2 * 2:
+					GameData.play_music_fresh("res://Assets/Sound/MuerteBoss.mp3")
 					state = State.CRAZY
 					_play_animation("Crazy")
 				else:
@@ -326,12 +349,16 @@ func _on_animation_finished() -> void:
 			_enter_stalk()
 
 		State.CRAZY:
+			GameData.play_music_fresh("res://Assets/Sound/MuerteBoss.mp3")
+			_play_animation("Crazy")
 			state = State.DEATH
 			_play_animation("Death")
 
 		State.DEATH:
+			_play_sfx("res://Assets/Sound/Cuerpo.mp3")
 			await get_tree().create_timer(0.5).timeout
-			queue_free()
+			GameData.boss_derrotado = true
+			get_tree().change_scene_to_file("res://Scenes/ending.tscn")
 
 
 func _on_frame_changed() -> void:

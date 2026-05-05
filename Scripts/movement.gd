@@ -7,6 +7,8 @@ var lives: int = 3
 var is_z_form: bool = false
 var combo_count: int = 0
 var combo_timer: float = 0.0
+var energia: float = 0.0
+const POW_DRAIN: float = 3.0
 const COMBO_WINDOW: float = 0.6
 
 @onready var punch_collision: CollisionShape2D = $Punch/CollisionShape2D
@@ -33,6 +35,12 @@ func _ready() -> void:
 	hitbox.area_entered.connect(_on_hitbox_area_entered)
 	sprite.frame_changed.connect(_on_frame_changed)
 	sprite.animation_finished.connect(_on_animation_finished)
+	energia = GameData.player_pow
+	
+	# Restaurar estado guardado
+	hp = GameData.player_hp
+	lives = GameData.player_lives
+	is_z_form = GameData.player_is_z_form
 
 	# Spawn point
 	if GameData.spawn_point != "SpawnDefault":
@@ -43,6 +51,25 @@ func _ready() -> void:
 			global_position = spawn.global_position
 		else:
 			print("NO encontrado")
+			
+	# Límites de cámara automáticos
+	var cam: Camera2D = $Camera2D
+	var room_sprite = _buscar_sprite_fondo(get_tree().current_scene)
+	if room_sprite and room_sprite.texture:
+		var tex_size = room_sprite.texture.get_size() * room_sprite.scale
+		var pos = room_sprite.global_position
+		# El sprite en Godot se centra en su posición por defecto
+		cam.limit_left = int(pos.x - tex_size.x / 2)
+		cam.limit_right = int(pos.x + tex_size.x / 2)
+		cam.limit_top = int(pos.y - tex_size.y / 2)
+		cam.limit_bottom = int(pos.y + tex_size.y / 2)
+		
+func _play_sfx(path: String) -> void:
+	var sfx = AudioStreamPlayer.new()
+	sfx.stream = load(path)
+	add_child(sfx)
+	sfx.play()
+	sfx.finished.connect(sfx.queue_free)
 
 func _buscar_nodo(nodo: Node, nombre: String) -> Node:
 	if nodo.name == nombre:
@@ -52,8 +79,19 @@ func _buscar_nodo(nodo: Node, nombre: String) -> Node:
 		if resultado:
 			return resultado
 	return null
+	
+
+func _buscar_sprite_fondo(nodo: Node) -> Sprite2D:
+	for child in nodo.get_children():
+		if child is Sprite2D:
+			return child
+		var resultado = _buscar_sprite_fondo(child)
+		if resultado:
+			return resultado
+	return null
 
 func _process(delta: float) -> void:
+	energia = GameData.player_pow
 	if muerto or caido:
 		return
 
@@ -102,6 +140,12 @@ func _process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("Transform"):
 		intentar_transformar()
+	if is_z_form:
+		energia -= POW_DRAIN * delta
+		energia = max(energia, 0.0)
+		GameData.player_pow = energia
+		if energia <= 0.0:
+			_destransformar()
 
 
 func _physics_process(_delta: float) -> void:
@@ -154,17 +198,25 @@ func intentar_transformar() -> void:
 	if atacando or caido or muerto:
 		return
 	if is_z_form:
-		_destransformar()
+		return  # no podés destransformarte manualmente
 	else:
-		_transformar()
+		if energia >= 100.0:  # solo si está llena
+			_transformar()
 
 func _transformar() -> void:
+	_play_sfx("res://Assets/Sound/Transform.mp3")
 	atacando = true
+	is_z_form = true
+	GameData.player_is_z_form = true
 	sprite.play("Transform")
 
 func _destransformar() -> void:
+	_play_sfx("res://Assets/Sound/Transform.mp3")
 	atacando = true
 	is_z_form = false
+	energia = 0.0
+	GameData.player_pow = 0.0
+	GameData.player_is_z_form = false
 	sprite.play("Destransform")
 
 func golpes_para_derribar() -> int:
@@ -181,7 +233,8 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 func recibir_danio() -> void:
 	if caido or muerto or invulnerable:
 		return
-	hp -= 1
+	hp -= 0.7
+	GameData.player_hp = hp
 	atacando = false
 	punch_collision.set_deferred("disabled", true)
 	combo_count = 0
@@ -198,10 +251,14 @@ func recibir_derribo(atacante_pos: Vector2) -> void:
 	atacando = false
 	punch_collision.set_deferred("disabled", true)
 	combo_count = 0
-	# Empujar en dirección contraria al atacante
+	hp -= 1
+	GameData.player_hp = hp
 	var dir_x = sign(global_position.x - atacante_pos.x)
 	knockback_velocity = Vector2(dir_x * 80.0, 0.0)
-	_entrar_caida_sin_vida()
+	if hp <= 0:
+		_entrar_caida()  # esta sí descuenta vida al levantarse
+	else:
+		_entrar_caida_sin_vida()
 
 func recibir_golpe_jefe() -> void:
 	if caido or muerto or invulnerable:
@@ -210,7 +267,7 @@ func recibir_golpe_jefe() -> void:
 	punch_collision.set_deferred("disabled", true)
 	combo_count = 0
 	caida_por_jefe = true
-	hp -= 2
+	hp -= 1
 	knockback_velocity = Vector2(-80.0 if mirando_derecha else 80.0, 0.0)
 	_entrar_caida_sin_vida()
 
@@ -218,17 +275,25 @@ func recibir_golpe_jefe() -> void:
 #  CAIDA Y MUERTE
 # ──────────────────────────────────────────────
 func _entrar_caida() -> void:
+	_play_sfx("res://Assets/Sound/Player.mp3")
 	caido = true
 	invulnerable = true
 	atacando = false
 	punch_collision.set_deferred("disabled", true)
 	hitbox.set_deferred("monitoring", false)
 	hitbox.set_deferred("monitorable", false)
-	# Knockback alejándose del centro de la pantalla
 	knockback_velocity = Vector2(-80.0 if mirando_derecha else 80.0, 0.0)
+	# Pre-guardar HP restaurado por si cambia escena durante la animación
+	if hp <= 0:
+		var lives_after = lives - 1
+		if lives_after > 0:
+			GameData.player_hp = 5
+			GameData.player_lives = lives_after
 	sprite.play("FallZ" if is_z_form else "Fall")
 	
 func _entrar_caida_sin_vida() -> void:
+	_play_sfx("res://Assets/Sound/Player.mp3")
+	print("entrar_caida_sin_vida llamado")
 	caido = true
 	invulnerable = true
 	atacando = false
@@ -238,7 +303,6 @@ func _entrar_caida_sin_vida() -> void:
 	sprite.play("FallZ" if is_z_form else "Fall")
 
 func _entrar_recuperacion() -> void:
-	hp = 5
 	caido = false
 	knockback_velocity = Vector2.ZERO
 	hitbox.set_deferred("monitoring", false)
@@ -251,6 +315,10 @@ func _entrar_muerte() -> void:
 	caido = false
 	knockback_velocity = Vector2.ZERO
 	sprite.play("DeathZ" if is_z_form else "Death")
+	# Esperar que termine la animación y mostrar game over
+	await sprite.animation_finished
+	await get_tree().create_timer(1.0).timeout
+	get_tree().change_scene_to_file("res://Scenes/ending.tscn")
 
 # ──────────────────────────────────────────────
 #  SEÑALES SPRITE
@@ -272,19 +340,23 @@ func _on_animation_finished() -> void:
 			caida_por_jefe = false
 			if hp <= 0:
 				lives -= 1
+				GameData.player_lives = lives
 				if lives <= 0:
 					_entrar_muerte()
 				else:
 					hp = 5
+					GameData.player_lives = lives
 					_entrar_recuperacion()
 			else:
 				_entrar_recuperacion()  # se levanta sin perder vida
 		elif hp <= 0:
 			lives -= 1
+			GameData.player_lives = lives
 			if lives <= 0:
 				_entrar_muerte()
 			else:
 				hp = 5
+				GameData.player_lives = lives
 				_entrar_recuperacion()
 		else:
 			_entrar_recuperacion()

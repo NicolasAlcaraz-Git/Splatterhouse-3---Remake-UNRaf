@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://molde3spct5f" path="res://Scripts/portal4_2.gd" id="5_41epl"]
 [ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="5_tub75"]
 [ext_resource type="PackedScene" uid="uid://caqxv6dl48qfx" path="res://Scenes/zombie.tscn" id="6_7epum"]
+[ext_resource type="PackedScene" uid="uid://d4cuklwikl1g2" path="res://Scenes/hud.tscn" id="7_ruboj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(260, 20)
@@ -84,16 +85,18 @@ position = Vector2(90, 15)
 [node name="Player" parent="." unique_id=348322079 instance=ExtResource("5_tub75")]
 
 [node name="Zombie" parent="." unique_id=1021773311 instance=ExtResource("6_7epum")]
-position = Vector2(82, 18)
+position = Vector2(54, 18)
 
 [node name="Zombie2" parent="." unique_id=785373139 instance=ExtResource("6_7epum")]
-position = Vector2(48, -4)
+position = Vector2(25, 22)
 
 [node name="Zombie3" parent="." unique_id=491312960 instance=ExtResource("6_7epum")]
 position = Vector2(-84, 3)
 
 [node name="Zombie4" parent="." unique_id=253861344 instance=ExtResource("6_7epum")]
 position = Vector2(-58, 21)
+
+[node name="HUD" parent="." unique_id=328279809 instance=ExtResource("7_ruboj")]
 
 [connection signal="body_entered" from="Room4/Portal4" to="Room4/Portal4" method="_on_body_entered"]
 [connection signal="body_entered" from="Room4/Portal4_2" to="Room4/Portal4_2" method="_on_body_entered"]

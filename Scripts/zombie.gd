@@ -39,6 +39,13 @@ func _ready() -> void:
 	state = State.WALK
 	_play_animation("Walk")
 
+func _play_sfx(path: String) -> void:
+	var sfx = AudioStreamPlayer2D.new()
+	sfx.stream = load(path)
+	add_child(sfx)
+	sfx.play()
+	sfx.finished.connect(sfx.queue_free)
+
 func _physics_process(delta: float) -> void:
 	_actualizar_punch()
 
@@ -165,6 +172,11 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.get_parent() == self:
 		return
 	if area.is_in_group("player_punch"):
+		var player_node = get_tree().get_first_node_in_group("player")
+		if player_node and player_node.is_z_form:
+			_play_sfx("res://Assets/Sound/PunchZ.mp3")
+		else:
+			_play_sfx("res://Assets/Sound/Punch.mp3")
 		# Verificar si el jugador está transformado
 		var damage = 1
 		if player and player.is_z_form:
@@ -211,6 +223,7 @@ func _on_frame_changed() -> void:
 #  MUERTE
 # ──────────────────────────────────────────────
 func _die() -> void:
+	_play_sfx("res://Assets/Sound/Cuerpo.mp3")
 	state = State.DEAD
 	var rooms = get_tree().get_nodes_in_group("room")
 	for room in rooms:

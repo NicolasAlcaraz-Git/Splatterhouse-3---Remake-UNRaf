@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://cqusnxrjdovv2" path="res://Scenes/zombie_fat.tscn" id="6_gtyy2"]
 [ext_resource type="PackedScene" uid="uid://b6dofwot2lsad" path="res://Scenes/deadreaper.tscn" id="7_viiu1"]
 [ext_resource type="PackedScene" uid="uid://caqxv6dl48qfx" path="res://Scenes/zombie.tscn" id="8_pteg6"]
+[ext_resource type="PackedScene" uid="uid://d4cuklwikl1g2" path="res://Scenes/hud.tscn" id="9_viiu1"]
+[ext_resource type="PackedScene" uid="uid://b6offmlhsk76o" path="res://Scenes/orb.tscn" id="10_ic2nn"]
+[ext_resource type="PackedScene" uid="uid://cjc18r8kb5w4u" path="res://Scenes/heart.tscn" id="11_bxrbf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(1534, 20)
@@ -134,7 +137,27 @@ position = Vector2(548, 3)
 position = Vector2(619, 18)
 
 [node name="Zombie6" parent="." unique_id=429069742 instance=ExtResource("8_pteg6")]
-position = Vector2(695, -5)
+position = Vector2(656, -3)
+
+[node name="HUD" parent="." unique_id=328279809 instance=ExtResource("9_viiu1")]
+
+[node name="Orb" parent="." unique_id=236703255 instance=ExtResource("10_ic2nn")]
+position = Vector2(-727, 39)
+
+[node name="Heart" parent="." unique_id=1078466136 instance=ExtResource("11_bxrbf")]
+position = Vector2(-542, 18)
+
+[node name="Heart2" parent="." unique_id=623477084 instance=ExtResource("11_bxrbf")]
+position = Vector2(-356, 46)
+
+[node name="Orb2" parent="." unique_id=1307166850 instance=ExtResource("10_ic2nn")]
+position = Vector2(-123, 12)
+
+[node name="Heart3" parent="." unique_id=1551122515 instance=ExtResource("11_bxrbf")]
+position = Vector2(250, 41)
+
+[node name="Orb3" parent="." unique_id=321013590 instance=ExtResource("10_ic2nn")]
+position = Vector2(434, 16)
 
 [connection signal="body_entered" from="Room20/Portal20" to="Room20/Portal20" method="_on_body_entered"]
 [connection signal="body_entered" from="Room20/Portal20_2" to="Room20/Portal20_2" method="_on_body_entered"]

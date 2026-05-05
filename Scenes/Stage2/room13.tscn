@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="6_j2yfr"]
 [ext_resource type="PackedScene" uid="uid://cqusnxrjdovv2" path="res://Scenes/zombie_fat.tscn" id="7_cp550"]
 [ext_resource type="PackedScene" uid="uid://b6dofwot2lsad" path="res://Scenes/deadreaper.tscn" id="8_7gcc1"]
+[ext_resource type="PackedScene" uid="uid://d4cuklwikl1g2" path="res://Scenes/hud.tscn" id="9_7gcc1"]
+[ext_resource type="PackedScene" uid="uid://b6offmlhsk76o" path="res://Scenes/orb.tscn" id="10_veuy0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(512, 20)
@@ -114,6 +116,11 @@ position = Vector2(-52, 9)
 
 [node name="Deadreaper2" parent="." unique_id=746721742 instance=ExtResource("8_7gcc1")]
 position = Vector2(13, 24)
+
+[node name="HUD" parent="." unique_id=328279809 instance=ExtResource("9_7gcc1")]
+
+[node name="Orb" parent="." unique_id=236703255 instance=ExtResource("10_veuy0")]
+position = Vector2(126, 38)
 
 [connection signal="body_entered" from="Room13/Portal13" to="Room13/Portal13" method="_on_body_entered"]
 [connection signal="body_entered" from="Room13/Portal13_2" to="Room13/Portal13_2" method="_on_body_entered"]

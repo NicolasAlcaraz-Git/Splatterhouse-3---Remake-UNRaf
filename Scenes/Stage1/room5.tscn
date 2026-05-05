@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://caqxv6dl48qfx" path="res://Scenes/zombie.tscn" id="6_umorw"]
 [ext_resource type="PackedScene" uid="uid://cqusnxrjdovv2" path="res://Scenes/zombie_fat.tscn" id="7_5dmlb"]
 [ext_resource type="PackedScene" uid="uid://b6dofwot2lsad" path="res://Scenes/deadreaper.tscn" id="8_5rccu"]
+[ext_resource type="PackedScene" uid="uid://d4cuklwikl1g2" path="res://Scenes/hud.tscn" id="9_5dmlb"]
+[ext_resource type="PackedScene" uid="uid://cjc18r8kb5w4u" path="res://Scenes/heart.tscn" id="10_5rccu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(512, 20)
@@ -86,16 +88,21 @@ position = Vector2(220, 15)
 [node name="Player" parent="." unique_id=348322079 instance=ExtResource("5_kmfvn")]
 
 [node name="Zombie" parent="." unique_id=1021773311 instance=ExtResource("6_umorw")]
-position = Vector2(168, 11)
+position = Vector2(119, 11)
 
 [node name="Zombie2" parent="." unique_id=536347985 instance=ExtResource("6_umorw")]
-position = Vector2(109, 2)
+position = Vector2(54, 9)
 
 [node name="ZombieFat" parent="." unique_id=897472459 instance=ExtResource("7_5dmlb")]
-position = Vector2(-171, 13)
+position = Vector2(-80, 8)
 
 [node name="Deadreaper" parent="." unique_id=1618990071 instance=ExtResource("8_5rccu")]
-position = Vector2(-76, 8)
+position = Vector2(-15, 5)
+
+[node name="HUD" parent="." unique_id=328279809 instance=ExtResource("9_5dmlb")]
+
+[node name="Heart" parent="." unique_id=1078466136 instance=ExtResource("10_5rccu")]
+position = Vector2(61, 40)
 
 [connection signal="body_entered" from="Room5/Portal5" to="Room5/Portal5" method="_on_body_entered"]
 [connection signal="body_entered" from="Room5/Portal5_2" to="Room5/Portal5_2" method="_on_body_entered"]

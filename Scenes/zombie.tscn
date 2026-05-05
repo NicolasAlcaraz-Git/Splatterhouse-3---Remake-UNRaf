@@ -274,6 +274,11 @@ size = Vector2(29, 8)
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=210882003]
 collision_layer = 4
 script = ExtResource("1_n70j1")
+speed = null
+detection_range = null
+punch_range = null
+punch_cooldown = null
+idle_before_attack = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=192070650]
 z_index = 1

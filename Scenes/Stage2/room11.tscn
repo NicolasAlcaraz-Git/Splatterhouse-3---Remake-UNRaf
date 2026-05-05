@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://bf8habraj4g0f" path="res://Scripts/portal11_3.gd" id="6_30405"]
 [ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="6_gba4v"]
 [ext_resource type="PackedScene" uid="uid://b6dofwot2lsad" path="res://Scenes/deadreaper.tscn" id="7_vmlqg"]
+[ext_resource type="PackedScene" uid="uid://d4cuklwikl1g2" path="res://Scenes/hud.tscn" id="8_4hlhx"]
+[ext_resource type="PackedScene" uid="uid://cjc18r8kb5w4u" path="res://Scenes/heart.tscn" id="9_647r6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(256, 20)
@@ -103,16 +105,15 @@ position = Vector2(90, 15)
 [node name="Player" parent="." unique_id=348322079 instance=ExtResource("6_gba4v")]
 
 [node name="Deadreaper" parent="." unique_id=1618990071 instance=ExtResource("7_vmlqg")]
-position = Vector2(55, 30)
-
-[node name="Deadreaper2" parent="." unique_id=184344567 instance=ExtResource("7_vmlqg")]
-position = Vector2(18, 32)
+position = Vector2(47, 32)
 
 [node name="Deadreaper3" parent="." unique_id=1482580852 instance=ExtResource("7_vmlqg")]
-position = Vector2(-36, 32)
+position = Vector2(-40, 33)
 
-[node name="Deadreaper4" parent="." unique_id=1272351578 instance=ExtResource("7_vmlqg")]
-position = Vector2(-51, 20)
+[node name="HUD" parent="." unique_id=328279809 instance=ExtResource("8_4hlhx")]
+
+[node name="Heart" parent="." unique_id=1078466136 instance=ExtResource("9_647r6")]
+position = Vector2(-14, 42)
 
 [connection signal="body_entered" from="Room11/Portal11" to="Room11/Portal11" method="_on_body_entered"]
 [connection signal="body_entered" from="Room11/Portal11_2" to="Room11/Portal11_2" method="_on_body_entered"]

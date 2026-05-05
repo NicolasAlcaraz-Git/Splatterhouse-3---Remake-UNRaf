@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://6ygluqrr0wxe" path="res://Scenes/player.tscn" id="5_6u0av"]
 [ext_resource type="Script" uid="uid://fs0epqad5lrj" path="res://Scripts/portal8_2.gd" id="5_18rkp"]
 [ext_resource type="PackedScene" uid="uid://caqxv6dl48qfx" path="res://Scenes/zombie.tscn" id="6_iqsli"]
+[ext_resource type="PackedScene" uid="uid://d4cuklwikl1g2" path="res://Scenes/hud.tscn" id="7_chpb2"]
+[ext_resource type="PackedScene" uid="uid://cjc18r8kb5w4u" path="res://Scenes/heart.tscn" id="8_beedv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqa8"]
 size = Vector2(512, 20)
@@ -90,7 +92,12 @@ position = Vector2(82, 15)
 position = Vector2(50, 2)
 
 [node name="Zombie3" parent="." unique_id=1652015438 instance=ExtResource("6_iqsli")]
-position = Vector2(-63, 11)
+position = Vector2(-39, 23)
+
+[node name="HUD" parent="." unique_id=328279809 instance=ExtResource("7_chpb2")]
+
+[node name="Heart" parent="." unique_id=1078466136 instance=ExtResource("8_beedv")]
+position = Vector2(49, 39)
 
 [connection signal="body_entered" from="Room8/Portal8" to="Room8/Portal8" method="_on_body_entered"]
 [connection signal="body_entered" from="Room8/Portal8_2" to="Room8/Portal8_2" method="_on_body_entered"]
