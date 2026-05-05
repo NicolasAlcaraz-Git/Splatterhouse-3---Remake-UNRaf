@@ -28,7 +28,7 @@ func _ready() -> void:
 	GameData.spawn_point = "SpawnDefault"
 	GameData.tiempo_restante = 360.0
 	GameData.tiempo_agotado = false
-	GameData.player_hp = 5
+	GameData.player_hp = 10
 	GameData.player_lives = 3
 	GameData.player_pow = 0.0
 	GameData.player_is_z_form = false

@@ -75,6 +75,7 @@ func _mostrar_game_over() -> void:
 	var tween2 = create_tween()
 	tween2.tween_property(fade2, "color:a", 1.0, 0.8)
 	await tween2.finished
+	GameData.stop_music()
 	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
  
 func _esperar_input() -> void:

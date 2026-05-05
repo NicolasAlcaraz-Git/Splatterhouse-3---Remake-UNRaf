@@ -108,7 +108,7 @@ position = Vector2(90, 15)
 position = Vector2(47, 32)
 
 [node name="Deadreaper3" parent="." unique_id=1482580852 instance=ExtResource("7_vmlqg")]
-position = Vector2(-40, 33)
+position = Vector2(-16, 32)
 
 [node name="HUD" parent="." unique_id=328279809 instance=ExtResource("8_4hlhx")]
 

@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var speed: float = 120
 var atacando: bool = false
-var hp: int = 5
+var hp: int = 10
 var lives: int = 3
 var is_z_form: bool = false
 var combo_count: int = 0
@@ -233,7 +233,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 func recibir_danio() -> void:
 	if caido or muerto or invulnerable:
 		return
-	hp -= 0.7
+	hp -= 1
 	GameData.player_hp = hp
 	atacando = false
 	punch_collision.set_deferred("disabled", true)
@@ -267,7 +267,7 @@ func recibir_golpe_jefe() -> void:
 	punch_collision.set_deferred("disabled", true)
 	combo_count = 0
 	caida_por_jefe = true
-	hp -= 1
+	hp -= 2
 	knockback_velocity = Vector2(-80.0 if mirando_derecha else 80.0, 0.0)
 	_entrar_caida_sin_vida()
 
@@ -287,7 +287,7 @@ func _entrar_caida() -> void:
 	if hp <= 0:
 		var lives_after = lives - 1
 		if lives_after > 0:
-			GameData.player_hp = 5
+			GameData.player_hp = 10
 			GameData.player_lives = lives_after
 	sprite.play("FallZ" if is_z_form else "Fall")
 	
@@ -344,7 +344,7 @@ func _on_animation_finished() -> void:
 				if lives <= 0:
 					_entrar_muerte()
 				else:
-					hp = 5
+					hp = 10
 					GameData.player_lives = lives
 					_entrar_recuperacion()
 			else:
@@ -355,7 +355,7 @@ func _on_animation_finished() -> void:
 			if lives <= 0:
 				_entrar_muerte()
 			else:
-				hp = 5
+				hp = 10
 				GameData.player_lives = lives
 				_entrar_recuperacion()
 		else:

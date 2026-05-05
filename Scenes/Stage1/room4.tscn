@@ -85,16 +85,16 @@ position = Vector2(90, 15)
 [node name="Player" parent="." unique_id=348322079 instance=ExtResource("5_tub75")]
 
 [node name="Zombie" parent="." unique_id=1021773311 instance=ExtResource("6_7epum")]
-position = Vector2(54, 18)
+position = Vector2(-59, 0)
 
 [node name="Zombie2" parent="." unique_id=785373139 instance=ExtResource("6_7epum")]
-position = Vector2(25, 22)
+position = Vector2(-57, 22)
 
 [node name="Zombie3" parent="." unique_id=491312960 instance=ExtResource("6_7epum")]
 position = Vector2(-84, 3)
 
 [node name="Zombie4" parent="." unique_id=253861344 instance=ExtResource("6_7epum")]
-position = Vector2(-58, 21)
+position = Vector2(-93, 20)
 
 [node name="HUD" parent="." unique_id=328279809 instance=ExtResource("7_ruboj")]
 

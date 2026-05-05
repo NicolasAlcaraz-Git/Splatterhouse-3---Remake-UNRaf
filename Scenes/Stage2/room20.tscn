@@ -86,7 +86,7 @@ position = Vector2(-640, 30)
 [node name="Player" parent="." unique_id=348322079 instance=ExtResource("5_yc54u")]
 
 [node name="ZombieFat" parent="." unique_id=897472459 instance=ExtResource("6_gtyy2")]
-position = Vector2(-590, 11)
+position = Vector2(-546, 12)
 
 [node name="ZombieFat2" parent="." unique_id=355762258 instance=ExtResource("6_gtyy2")]
 position = Vector2(-488, 0)

@@ -124,10 +124,10 @@ position = Vector2(130, 15)
 [node name="Player" parent="." unique_id=348322079 instance=ExtResource("7_hb0sp")]
 
 [node name="Deadreaper" parent="." unique_id=1618990071 instance=ExtResource("8_l3m3d")]
-position = Vector2(-61, 25)
+position = Vector2(-34, 27)
 
 [node name="Deadreaper2" parent="." unique_id=801239945 instance=ExtResource("8_l3m3d")]
-position = Vector2(6, 11)
+position = Vector2(23, 11)
 
 [node name="Deadreaper3" parent="." unique_id=591726342 instance=ExtResource("8_l3m3d")]
 position = Vector2(59, 28)

@@ -114,7 +114,7 @@ position = Vector2(59, 26)
 position = Vector2(91, 2)
 
 [node name="Zombie" parent="." unique_id=1021773311 instance=ExtResource("8_ty4ro")]
-position = Vector2(-149, 0)
+position = Vector2(-54, 18)
 
 [node name="Zombie2" parent="." unique_id=661175355 instance=ExtResource("8_ty4ro")]
 position = Vector2(-76, -3)

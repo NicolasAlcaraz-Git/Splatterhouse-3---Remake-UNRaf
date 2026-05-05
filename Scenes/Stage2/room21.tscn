@@ -56,10 +56,7 @@ position = Vector2(-33, 3)
 [node name="HUD" parent="." unique_id=328279809 instance=ExtResource("4_abq56")]
 
 [node name="Orb" parent="." unique_id=236703255 instance=ExtResource("5_2iydk")]
-position = Vector2(209, 44)
+position = Vector2(159, 12)
 
 [node name="Heart" parent="." unique_id=1078466136 instance=ExtResource("6_ck3gt")]
-position = Vector2(171, 13)
-
-[node name="Heart2" parent="." unique_id=1966008946 instance=ExtResource("6_ck3gt")]
-position = Vector2(66, 4)
+position = Vector2(204, 42)

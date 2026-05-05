@@ -60,7 +60,7 @@ position = Vector2(0, 16)
 collision_mask = 4
 script = ExtResource("4_edukf")
 next_scene_path = "res://Scenes/Stage1/room4.tscn"
-spawn_point_name = "Door4left"
+spawn_point_name = "Door4right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room5/Portal5" unique_id=819664652]
 position = Vector2(-242.5, -7.5)

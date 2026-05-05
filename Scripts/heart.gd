@@ -18,7 +18,7 @@ func _on_area_entered(area: Area2D) -> void:
 		sfx.play()
 		sfx.finished.connect(sfx.queue_free)
 		var player = area.get_parent()  # el jugador es el padre del Hitbox
-		var new_hp = min(player.hp + 2, 5)
+		var new_hp = min(player.hp + 2, 10)
 		player.hp = new_hp
 		GameData.player_hp = new_hp
 		queue_free()

@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Bucle.mp3-43eb466322bc41cb8bb089a0270b7c1b.mp
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

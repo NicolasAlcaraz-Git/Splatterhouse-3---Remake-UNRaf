@@ -1,7 +1,7 @@
 # hud.gd
 extends CanvasLayer
 
-const MAX_HP = 5
+const MAX_HP = 10
 const MAX_POW = 100.0
 
 var tiempo_restante: float = GameData.tiempo_restante
@@ -19,6 +19,7 @@ var S: float = 4.0
 var font: FontFile
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	font = load("res://Assets/Items/PressStart2P.ttf")
 	_crear_hud()
 
@@ -27,6 +28,15 @@ func _crear_hud() -> void:
 	var bar_h = int(12 * S)
 	var top_h = int(30 * S)
 	var bottom_h = int(25 * S)
+	
+	var mapa = TextureRect.new()
+	mapa.name = "Mapa"
+	mapa.texture = load("res://Assets/Items/map.png")
+	mapa.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	mapa.size = Vector2(800, 600)
+	mapa.position = Vector2(250, 190)
+	mapa.visible = false
+	add_child(mapa)
 
 	# ── BARRA SUPERIOR ──
 	var top_bg = ColorRect.new()
@@ -125,6 +135,18 @@ func _crear_hud() -> void:
 	pow_fill.set_meta("max_w", pow_bar_w)
 
 func _process(_delta: float) -> void:
+	# Pausa — siempre se ejecuta
+	if Input.is_action_just_pressed("Pause"):
+		var mapa = get_node_or_null("Mapa")
+		if mapa:
+			var pausando = not mapa.visible
+			mapa.visible = pausando
+			get_tree().paused = pausando
+
+	# Todo lo siguiente NO corre si está pausado
+	if get_tree().paused:
+		return
+
 	# TIEMPO
 	GameData.tiempo_restante = tiempo_restante
 	if not tiempo_agotado:
